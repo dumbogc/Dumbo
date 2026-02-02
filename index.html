@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Do You Love Me?</title>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -27,20 +29,9 @@
     border-radius: 8px;
   }
 
-  #btnYes {
-    background-color: #4CAF50;
-    color: white;
-  }
-
-  #btnNo {
-    background-color: #FF4081;
-    color: white;
-  }
-
-  #btnWatch {
-    background-color: #7A7AFF;
-    color: white;
-  }
+  #btnYes { background-color: #4CAF50; color: white; }
+  #btnNo { background-color: #FF4081; color: white; }
+  #btnWatch { background-color: #7A7AFF; color: white; }
 
   #image {
     margin-top: 50px;
@@ -55,104 +46,107 @@
     border-radius: 10px;
   }
 
-  .d-none {
-    display: none;
-  }
+  .d-none { display: none; }
 </style>
 </head>
+
 <body>
-  <div>
-    <h1 id="message"> Hey, Happy Monthesry! Do you love me ?</h1>
-    <img id="image" src="https://media.tenor.com/83VSASMnBJQAAAAj/bubu-dudu-sseeyall.gif" alt="dudu gif">
-  </div>
 
-  <!-- Buttons -->
-  <button id="btnYes">Yes</button>
-  <button id="btnNo">No</button>
-  <button id="btnWatch" class="d-none">Video for you 💋</button>
+<div>
+  <h1 id="message">Hey, Happy Monthesry! Do you love me?</h1>
+  <img id="image"
+       src="https://media.tenor.com/83VSASMnBJQAAAAj/bubu-dudu-sseeyall.gif">
+</div>
 
-  <!-- YouTube iframe -->
-  <div id="videoContainer" class="d-none">
-    <div id="myVideo"></div>
-  </div>
+<button id="btnYes">Yes</button>
+<button id="btnNo">No</button>
+<button id="btnWatch" class="d-none">Video for you 💋</button>
+
+<div id="videoContainer" class="d-none">
+  <div id="myVideo"></div>
+</div>
 
 <script>
-let player; // YouTube player instance
+let player;
+let apiReady = false;
 
-
-var tag = document.createElement('script');
+/* Load YouTube Iframe API */
+var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+document.body.appendChild(tag);
 
-
+/* YouTube API ready */
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('myVideo', {
-    height: '450',
-    width: '800',
-    videoId: 'uQFVqltOXRg', 
+  apiReady = true;
+
+  player = new YT.Player("myVideo", {
+    height: "450",
+    width: "800",
+    videoId: "uQFVqltOXRg",
     playerVars: {
       autoplay: 0,
       controls: 1
     },
     events: {
-      'onStateChange': onPlayerStateChange
+      onStateChange: onPlayerStateChange
     }
   });
 }
 
-
+/* When video ends */
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.ENDED) {
-    
     $("#videoContainer").addClass("d-none");
     $("#message").removeClass("d-none").html("พี่รักนู๋นะครับ ❤");
-    $("#image").attr("src", "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif");
+    $("#image").attr(
+      "src",
+      "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
+    );
   }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   let count = 0;
 
-  
-  $("#btnNo").click(function() {
-    $("#image").removeClass("d-none");
-    if(count === 0){
-      $("#image").attr("src", "https://media.tenor.com/5IRHkK2k-E8AAAAi/dudu.gif");
-    } else if(count === 1){
-      $("#image").attr("src", "https://media.tenor.com/TwgOtLeidQsAAAAi/dudu-cheeky-dudu-walking.gif");
-    } else if(count === 2){
-      $("#image").attr("src", "https://media.tenor.com/Q9VuGIKQqEMAAAAi/love-bear.gif");
-    } else if(count === 3){
-      $("#image").attr("src", "https://media.tenor.com/0XxZLMzjYV0AAAAi/dudu-crying-texting.gif");
-    } else if(count >= 4){
-      $("#image").attr("src", "https://media.tenor.com/TBqHlfNB19gAAAAi/dudu-mad-dudu-angry.gif");
+  $("#btnNo").click(function () {
+    const gifs = [
+      "https://media.tenor.com/5IRHkK2k-E8AAAAi/dudu.gif",
+      "https://media.tenor.com/TwgOtLeidQsAAAAi/dudu-cheeky-dudu-walking.gif",
+      "https://media.tenor.com/Q9VuGIKQqEMAAAAi/love-bear.gif",
+      "https://media.tenor.com/0XxZLMzjYV0AAAAi/dudu-crying-texting.gif",
+      "https://media.tenor.com/TBqHlfNB19gAAAAi/dudu-mad-dudu-angry.gif"
+    ];
+
+    $("#image").attr("src", gifs[Math.min(count, gifs.length - 1)]);
+    if (count >= 4) {
       $(this).hide();
-      $("#btnYes").css({"width":"90%","height":"100%"});
+      $("#btnYes").css({ width: "90%" });
     }
     count++;
   });
 
-  
-  $("#btnYes").click(function() {
-    $(this).hide();
-    $("#btnNo").hide();
-    setTimeout(() => { $("#btnWatch").removeClass("d-none"); }, 2000);
-
+  $("#btnYes").click(function () {
+    $("#btnYes, #btnNo").hide();
     $("#message").html("I Love You ❤");
-    $("#image").attr("src", "https://media.tenor.com/LJcUNGpO9s0AAAAj/dudu-flowers-rose-dudu.gif");
+    $("#image").attr(
+      "src",
+      "https://media.tenor.com/LJcUNGpO9s0AAAAj/dudu-flowers-rose-dudu.gif"
+    );
+
+    setTimeout(() => $("#btnWatch").removeClass("d-none"), 2000);
   });
 
-  
-  $("#btnWatch").click(function(){
-    $("#message").addClass("d-none");
+  $("#btnWatch").click(function () {
     $(this).hide();
-    $("#image").attr("src", "https://media.tenor.com/l2YDCpF8cGAAAAAi/dudu-bubu-dudu-bubu-popcorn.gif");
+    $("#message").addClass("d-none");
+    $("#image").attr(
+      "src",
+      "https://media.tenor.com/l2YDCpF8cGAAAAAi/dudu-bubu-dudu-bubu-popcorn.gif"
+    );
 
-    
     setTimeout(() => {
       $("#videoContainer").removeClass("d-none");
-      player.playVideo(); 
+      if (apiReady && player) player.playVideo();
     }, 2000);
   });
 });
