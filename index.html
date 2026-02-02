@@ -79,20 +79,20 @@
 <script>
 let player; // YouTube player instance
 
-// โหลด YouTube API
+
 var tag = document.createElement('script');
-tag.src = "https://youtu.be/uQFVqltOXRg?si=Wf4mIs5fANfowqqy";
+tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// ฟังก์ชันนี้จะถูกเรียกโดย YouTube API หลังโหลดเสร็จ
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('myVideo', {
     height: '450',
     width: '800',
-    videoId: 'M1bi6upipaw', // ใส่ YouTube ID ที่ต้องการ
+    videoId: 'uQFVqltOXRg', 
     playerVars: {
-      autoplay: 0, // เราจะสั่งเล่นเองตอนคลิก
+      autoplay: 0
       controls: 1
     },
     events: {
@@ -101,10 +101,10 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// ตรวจจับสถานะของวิดีโอ
+
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.ENDED) {
-    // วิดีโอเล่นจบ
+    
     $("#videoContainer").addClass("d-none");
     $("#message").removeClass("d-none").html("พี่รักนู๋นะครับ ❤");
     $("#image").attr("src", "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif");
@@ -114,7 +114,7 @@ function onPlayerStateChange(event) {
 $(document).ready(function() {
   let count = 0;
 
-  // ปุ่ม No
+  
   $("#btnNo").click(function() {
     $("#image").removeClass("d-none");
     if(count === 0){
@@ -133,7 +133,7 @@ $(document).ready(function() {
     count++;
   });
 
-  // ปุ่ม Yes
+  
   $("#btnYes").click(function() {
     $(this).hide();
     $("#btnNo").hide();
@@ -143,16 +143,16 @@ $(document).ready(function() {
     $("#image").attr("src", "https://media.tenor.com/LJcUNGpO9s0AAAAj/dudu-flowers-rose-dudu.gif");
   });
 
-  // ปุ่ม Watch (เปิดวิดีโอ YouTube)
+  
   $("#btnWatch").click(function(){
     $("#message").addClass("d-none");
     $(this).hide();
     $("#image").attr("src", "https://media.tenor.com/l2YDCpF8cGAAAAAi/dudu-bubu-dudu-bubu-popcorn.gif");
 
-    // แสดงวิดีโอ
+    
     setTimeout(() => {
       $("#videoContainer").removeClass("d-none");
-      player.playVideo(); // สั่งให้เล่นจริง ๆ ผ่าน API
+      player.playVideo(); 
     }, 2000);
   });
 });
