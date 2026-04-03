@@ -1,156 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Do You Love Me?</title>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 200px;
-    background-color: #fef5fb;
-  }
-
-  h1 {
-    font-size: 100px;
-    color: #FF80D2;
-    margin-bottom: 50px;
-  }
-
-  button {
-    padding: 40px 50px;
-    font-size: 100px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-  }
-
-  #btnYes { background-color: #4CAF50; color: white; }
-  #btnNo { background-color: #FF4081; color: white; }
-  #btnWatch { background-color: #7A7AFF; color: white; }
-
-  #image {
-    margin-top: 50px;
-    width: 500px;
-    border-radius: 10px;
-  }
-
-  #myVideo {
-    margin-top: 50px;
-    width: 800px;
-    height: 450px;
-    border-radius: 10px;
-  }
-
-  .d-none { display: none; }
-</style>
+  <meta charset="UTF-8" />
+  <title>Love letter for crush</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="love letter 2.css" />
 </head>
 
 <body>
+  <!-- tiktok meowish -->
+  <div class="envlope-wrapper">
+    <div id="envelope" class="close">
+      <div class="front flap"></div>
+      <div class="front pocket"></div>
+      <div class="letter">
+        <div class="words line1">To: DaniSaur</div>
+        <div class="words line2">Happy MOnthesary !</div>
+        <div class="words line3">HEHE! </div>
+        <div class="words line4">CUTE LETTER FOR YOU!</div>
+      </div>
+      <div class="hearts">
+        <div class="heart a1"></div>
+        <div class="heart a2"></div>
+        <div class="heart a3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="reset">
+    <button id="open">Open</button>
+    <button id="reset">Close</button>
+  </div>
 
-<div>
-  <h1 id="message">Hey, Happy Monthesry! Do you love me?</h1>
-  <img id="image"
-       src="https://media.tenor.com/83VSASMnBJQAAAAj/bubu-dudu-sseeyall.gif">
-</div>
-
-<button id="btnYes">Yes</button>
-<button id="btnNo">No</button>
-<button id="btnWatch" class="d-none">Video for you ☹️</button>
-
-<div id="videoContainer" class="d-none">
-  <div id="myVideo"></div>
-</div>
-
-<script>
-let player;
-let apiReady = false;
-
-/* Load YouTube Iframe API */
-var tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
-
-/* YouTube API ready */
-function onYouTubeIframeAPIReady() {
-  apiReady = true;
-
-  player = new YT.Player("myVideo", {
-    height: "450",
-    width: "800",
-    videoId: "uQFVqltOXRg",
-    playerVars: {
-      autoplay: 0,
-      controls: 1
-    },
-    events: {
-      onStateChange: onPlayerStateChange
-    }
-  });
-}
-
-/* When video ends */
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    $("#videoContainer").addClass("d-none");
-    $("#message").removeClass("d-none").html("พี่รักนู๋นะครับ ❤");
-    $("#image").attr(
-      "src",
-      "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
-    );
-  }
-}
-
-$(document).ready(function () {
-  let count = 0;
-
-  $("#btnNo").click(function () {
-    const gifs = [
-      "https://media.tenor.com/5IRHkK2k-E8AAAAi/dudu.gif",
-      "https://media.tenor.com/TwgOtLeidQsAAAAi/dudu-cheeky-dudu-walking.gif",
-      "https://media.tenor.com/Q9VuGIKQqEMAAAAi/love-bear.gif",
-      "https://media.tenor.com/0XxZLMzjYV0AAAAi/dudu-crying-texting.gif",
-      "https://media.tenor.com/TBqHlfNB19gAAAAi/dudu-mad-dudu-angry.gif"
-    ];
-
-    $("#image").attr("src", gifs[Math.min(count, gifs.length - 1)]);
-    if (count >= 4) {
-      $(this).hide();
-      $("#btnYes").css({ width: "90%" });
-    }
-    count++;
-  });
-
-  $("#btnYes").click(function () {
-    $("#btnYes, #btnNo").hide();
-    $("#message").html("I Love You ❤");
-    $("#image").attr(
-      "src",
-      "https://media.tenor.com/LJcUNGpO9s0AAAAj/dudu-flowers-rose-dudu.gif"
-    );
-
-    setTimeout(() => $("#btnWatch").removeClass("d-none"), 2000);
-  });
-
-  $("#btnWatch").click(function () {
-    $(this).hide();
-    $("#message").addClass("d-none");
-    $("#image").attr(
-      "src",
-      "https://media.tenor.com/l2YDCpF8cGAAAAAi/dudu-bubu-dudu-bubu-popcorn.gif"
-    );
-
-    setTimeout(() => {
-      $("#videoContainer").removeClass("d-none");
-      if (apiReady && player) player.playVideo();
-    }, 2000);
-  });
-});
-</script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="love letter 2.js"></script>
 </body>
+
 </html>
